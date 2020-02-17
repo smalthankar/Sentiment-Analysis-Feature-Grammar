@@ -1,0 +1,260 @@
+## Natural Language Toolkit: feat_gram_project_2.fcfg
+##
+## Project-2 feature-based grammar for English, illustrating
+## value-sharing of NUM and TENSE features.
+## Used in Feature-Based Grammars chapter.
+##
+## Author: Suyash Malthankar <suyashmalthankar.743@gmail.com>
+
+% start S
+# ###################
+# Grammar Productions
+# ###################
+
+# S expansion productions - Source
+S[SENT=?s] -> S[SENT=?s] PUNCT3
+
+S[SENT=?s] -> NP[NUM=?n, SENT=?s] VP[NUM=?n, SENT=?s] | NP[NUM=?n, SENT=neut] VP[NUM=?n, SENT=?s] | NP[NUM=?n, SENT=?s] VP[NUM=?n, SENT=neut]
+#S[SENT=neut] -> NP[NUM=?n, SENT=pos] VP[NUM=?n, SENT=neg] | NP[NUM=?n, SENT=neg] VP[NUM=?n, SENT=pos]
+S[SENT=?s] -> NP[NUM=?n, SENT=?s] PUNCT VP[NUM=?n, SENT=?s] PUNCT3 | NP[NUM=?n, SENT=?s] AdvP VP[NUM=?n, SENT=?s]
+
+S[SENT=?s] -> NP[NUM=?n, SENT=?s] PP[NUM=?n, SENT=?s]
+S[SENT=?s] -> NP[NUM=?n] PUNCT2 S[SENT=?s]
+S[SENT=?s] -> VP[NUM=?n, SENT=?s] NP[NUM=?n, SENT=?s]
+S[SENT=?s] -> VP[NUM=?n, SENT=?s] PP[NUM=?n, SENT=?s]
+S[SENT=?s] -> PP[NUM=?n, SENT=?s] VP[NUM=?n, SENT=?s]
+S[SENT=?s] -> VP[NUM=?n, SENT=?s]
+S[SENT=?s] -> AdvP[NUM=?n, SENT=?s] VP[NUM=?n, SENT=?s]
+S[SENT=?s] -> WHNP[NUM=?n] VP[NUM=?n, SENT=?s]
+S[SENT=?s] -> WHNP[NUM=?n] NP[NUM=?n, SENT=?s]
+
+
+S[SENT=neut] -> S PUNCT CC1 S
+S[SENT=?s] -> S[SENT=neut] PUNCT CC1 S[SENT=?s]
+S[SENT=?s] -> CC1 S[SENT=?s]
+S[SENT=?s] -> S[SENT=?s] PUNCT CC1 S
+S[SENT=?s] -> S[SENT=neut] CC2 S[SENT=?s]
+S[SENT=?s] -> S[SENT=?s] CC2 S
+S[SENT=?s] -> S[SENT=?s] PUNCT CC2 S
+
+S[SENT=?s] -> S[SENT=?s] PUNCT S
+#S[SENT=?s] -> S[SENT=?s] CC S[SENT=?s] | S[SENT=?s] PUNCT CC S[SENT=?s] | S[SENT=?s] PUNCT S[SENT=?s]
+S[SENT=?s] -> S[SENT=?s] PUNCT2 S[SENT=?s]
+S[SENT=?s] -> NP[NUM=?n, SENT=?s]
+
+SBAR[SENT=?s] -> PP[NUM=?n] S[SENT=?s]
+SBAR[SENT=?s] -> WHNP[NUM=?n] S[SENT=?s]
+
+# NP expansion productions - Noun Phrase
+NP[NUM=?n, SENT=?s] -> N[NUM=?n, SENT=?s]
+NP[NUM=?n, SENT=?s] -> N[NUM=?n, SENT=?s] NP[NUM=?n, SENT=?s] | N[NUM=?n, SENT=?s] PUNCT NP[NUM=?n, SENT=?s]
+NP[NUM=?n, SENT=?s] -> PropN[NUM=?n] | PropN[NUM=?n, SENT=?s]
+NP[NUM=?n, SENT=?s] -> PropN[NUM=?n] NP[NUM=?n, SENT=?s] | PropN[NUM=?n] PUNCT NP[NUM=?n, SENT=?s]
+NP[NUM=?n, SENT=?s] -> Det[NUM=?n]
+NP[NUM=?n, SENT=?s] -> Det[NUM=?n] NP[NUM=?n, SENT=?s]
+NP[NUM=?n, SENT=?s] -> Det[NUM=?n] AdjP[NUM=?n, SENT=neut] NP[NUM=?n, SENT=?s] | Det[NUM=?n] AdjP[NUM=?n, SENT=?s] NP[NUM=?n, SENT=neut]
+NP[NUM=?n, SENT=?s] -> AdjP[NUM=?n, SENT=?s] NP[NUM=?n, SENT=?s] | AdjP[NUM=?n, SENT=?s] NP[NUM=?n, SENT=neut]
+NP[NUM=?n, SENT=?s] -> AdjP[NUM=?n, SENT=?s]
+#NP[NUM=?n, SENT=?s] -> NP[NUM=?n, SENT=?s] AdjP[NUM=?n, SENT=?s]
+#NP[NUM=?n, SENT=?s] -> AdvP[NUM=?n, SENT=?s] NP[NUM=?n, SENT=?s]
+NP[NUM=?n, SENT=?s] -> AdvP[NUM=?n, SENT=?s]
+NP[NUM=?n, SENT=?s] -> NP[NUM=?n, SENT=?s] PP
+NP[NUM=?n, SENT=?s] -> CD
+NP[NUM=?n, SENT=?s] -> CD NP[NUM=?n, SENT=?s]
+NP[NUM=?n, SENT=?s] -> DOLLAR CD
+NP[NUM=?n, SENT=?s] -> NP[NUM=?n, SENT=?s] CD
+NP[NUM=?n, SENT=neut] -> PRP[NUM=?n, SENT=neut]
+NP[NUM=?n, SENT=?s] -> PRP[NUM=?n, SENT=neut] NP[NUM=?n, SENT=?s]
+NP[NUM=?n, SENT=?s] -> PRPS[NUM=?n]
+NP[NUM=?n, SENT=?s] -> PRPS[NUM=?n] NP[NUM=?n, SENT=?s]
+NP[NUM=?n, SENT=?s] -> NP[NUM=?n, SENT=?s] POS | NP[NUM=?n, SENT=?s] POS NP[NUM=?n, SENT=?s]
+NP[NUM=?n, SENT=?s] -> NP[NUM=?n, SENT=?s] CC NP[NUM=?n, SENT=?s]
+NP[NUM=?n, SENT=?s] -> NP[NUM=?n, SENT=neut] CC PP[NUM=?n, SENT=?s] | NP[NUM=?n, SENT=?s] CC PP
+NP[NUM=?n, SENT=?s] -> FW NP[NUM=?n, SENT=?s]
+
+
+
+NP[NUM=?n, SENT=?s] -> NP[NUM=?n, SENT=?s] SBAR[SENT=neut] | NP[NUM=?n, SENT=neut] SBAR[SENT=?s]
+
+# VP expansion productions - Verb Phrase
+VP[TENSE=?t, NUM=?n, SENT=?s] -> IV[TENSE=?t, NUM=?n, SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> TV[TENSE=?t, NUM=?n, SENT=?s] NP[SENT=?s] | TV[TENSE=?t, NUM=?n, SENT=?s] NP[SENT=neut]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> TV[TENSE=?t, NUM=?n, SENT=?s] VP[TENSE=?t, NUM=?n, SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> Det AdjP[NUM=?n, SENT=?s] VP[TENSE=?t, NUM=?n, SENT=neut]
+#| Det AdjP[NUM=?n, SENT=neut] VP[TENSE=?t, NUM=?n, SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> IV[TENSE=?t, NUM=?n, SENT=?s] PP
+VP[TENSE=?t, NUM=?n, SENT=?s] -> TV[TENSE=?t, NUM=?n, SENT=?s] PP
+VP[TENSE=?t, NUM=?n, SENT=?s] -> VP[TENSE=?t, NUM=?n, SENT=?s] TO
+VP[TENSE=?t, NUM=?n, SENT=?s] -> TO VP[TENSE=?t, NUM=?n, SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> TV[TENSE=?t, NUM=?n, SENT=?s] AdvP[NUM=?n, SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> TV[TENSE=?t, NUM=?n, SENT=?s] AdjP[NUM=?n, SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> StateV[TENSE=?t, NUM=?n] VP[TENSE=?t, NUM=?n, SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> StateV[TENSE=?t, NUM=?n] NP[NUM=?n, SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> StateV[TENSE=?t, NUM=?n] PP
+VP[TENSE=?t, NUM=?n, SENT=?s] -> StateV[TENSE=?t, NUM=?n] AdjP[SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> StateV[TENSE=?t, NUM=?n] S[SENT=?s]
+#VP[TENSE=?t, NUM=?n, SENT=neg] -> StateV S[SENT=pos]
+VP[TENSE=?t, NUM=?n, SENT=pos] -> StateVNOT S[SENT=neg]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> PresPartV NP[NUM=?n, SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> PresPartV VP[TENSE=?t, NUM=?n, SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> PresPartV PP
+#VP[TENSE=?t, NUM=?n, SENT=?s] -> PresPartVNOT NP[NUM=?n, SENT=?s]
+#VP[TENSE=?t, NUM=?n, SENT=?S] -> PresPartVNOT NP[NUM=?n, SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> VP[TENSE=?t, NUM=?n, SENT=?s] InfVP
+VP[TENSE=?t, NUM=?n, SENT=?s] -> InfVP NP
+VP[TENSE=?t, NUM=?n, SENT=?s] -> AUXV-MD[TENSE=?t, NUM=?n, SENT=?s] VP[TENSE=?t, NUM=?n, SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> AUXV-MD[TENSE=?t, NUM=?n, SENT=?s] AdvP VP[TENSE=?t, NUM=?n, SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> IV[TENSE=?t, NUM=?n, SENT=?s] PRT AdjP[NUM=?n, SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> VP[TENSE=?t, NUM=?n, SENT=?s] CC VP[TENSE=?t, NUM=?n, SENT=?s]
+
+VP[TENSE=?t, NUM=?n, SENT=?s] -> IV[TENSE=?t, NUM=?n, SENT=?s] SBAR[SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> TV[TENSE=?t, NUM=?n, SENT=?s] SBAR[SENT=?s]
+VP[TENSE=?t, NUM=?n, SENT=?s] -> TV[TENSE=?t, NUM=?n, SENT=?s] S[SENT=?s] | TV[TENSE=?t, NUM=?n, SENT=?s] PRT S[SENT=?s]
+
+# PP expansion productions - Preposition Phrase
+PP[NUM=?n] -> IN
+PP[NUM=?n] -> IN NP
+PP[NUM=?n] -> TO NP
+PP[NUM=?n] -> TO PP
+
+# AdvP expansion productions - AdVerbal Phrase
+AdvP[NUM=?n, SENT=?s] -> RB[SENT=?s]
+AdvP[NUM=?n, SENT=?s] -> RB[SENT=?s] AdvP[SENT=?s]
+AdvP[NUM=?n] -> RB PP
+
+# AdjP expansion productions - Adjective Phrase
+AdjP[NUM=?n, SENT=?s] -> ADJ[NUM=?n, SENT=?s]
+AdjP[NUM=?n, SENT=?s] -> ADJ[NUM=?n, SENT=?adj] AdjP[NUM=?n, SENT=?s]
+AdjP[NUM=?n, SENT=pos] -> ADJ[NUM=?n, SENT=pos] AdjP[NUM=?n, SENT=neut]
+
+AdjP[NUM=?n, SENT=?s] -> Det AdjP[NUM=?n, SENT=?s]
+
+#AdjP[NUM=?n, SENT=?s] -> RB[SENT=?s] AdjP | RB AdjP[SENT=?s]
+
+AdjP[NUM=?n, SENT=neg] -> RB[SENT=neg] AdjP[NUM=?n, SENT=pos]
+AdjP[NUM=?n, SENT=pos] -> RB[SENT=neg] AdjP[NUM=?n, SENT=neg]
+
+AdjP[NUM=?n, SENT=?adjp] -> RB[SENT=neut] AdjP[NUM=?n, SENT=?adjp]
+
+AdjP[NUM=?n, SENT=?adjp] -> RB[SENT=neut] PUNCT AdjP[NUM=?n, SENT=?adjp]
+
+
+# PUNCT expansion productions - Punctuations
+PUNCT -> ','
+PUNCT2 -> ';'
+PUNCT3 -> '.'
+
+# WHNP expansion productions
+WHNP[NUM=?n] -> WP
+WHNP[NUM=?n] -> WRB
+
+# InfVP expansion productions - Infinitive Verb
+InfVP[NUM=?n] -> TO VP
+
+# PRT expansion productions - Participle
+PRT -> RP
+
+# ###################
+# Lexical Productions
+# ###################
+
+
+# Determinants
+Det[NUM=sg] -> 'this' | 'every' | 'a' | 'A' | 'an' | 'This'
+Det[NUM=pl] -> 'these' | 'all' | 'All'
+Det -> 'the' | 'The' | 'some' | 'several' | 'any' | 'both'
+
+# Proper Nouns
+PropN[NUM=sg]-> 'Robin' | 'Guthrie' | 'Mr.' | 'Lieven' | 'Mahima' | 'Purohit' | 'Eragon'
+PropN[NUM=sg, SENT=pos] -> 'AWESOME'
+PropN[NUM=pl]-> 'Baskins' | 'Great'
+
+# Nouns
+N[NUM=sg, SENT=neut] -> 'story' | 'character' | 'coffee' | 'tea' | 'street' | 'cd' | 'movie' | 'pits' | 'film' \
+| 'game' | 'curve' | 'book' | 'boy' | 'CD' | 'job' | 'bias' | 'gameplay' | 'voice' | 'lyrics' | 'choice' | 'style' \
+| 'sound' | 'TV' | 'phone' | 'quality' | 'track' | 'trailer'
+N[NUM=sg, SENT=pos] -> 'genius'
+N[NUM=sg, SENT=neg] -> 'Nothing'
+N[NUM=pl, SENT=neut] -> 'connections' | 'dogs' | 'cats' | 'controls' | 'pits' | 'movies' | 'remakes' | 'songs' \
+| 'readers' | 'bias' | 'lyrics' | 'things' | 'characters' | 'pages' | 'issues' | 'functions' | 'times'
+
+# Intransitive, Transitive Verb and Stative Verb - Present Tense/Present Participle
+IV[TENSE=pres,  NUM=sg] -> 'disappears' | 'walks'
+TV[TENSE=pres, NUM=sg] -> 'says' | 'needs' | 'suffers' | 'causes' \
+| 'works' | 'plans' | 'Looks' | 'does'
+StateVNOT -> 'NOT'
+StateV[TENSE=pres, NUM=sg] -> 'is' | 'has' | 'be' | 'am'
+StateV[TENSE=pres, NUM=pl] -> 'are' | 'am' | 'have'
+PresPartV -> 'playing' | 'transporting' | 'being' | 'according' | 'coming' | 'conducting' | 'Outgoing' | 'announcing' \
+| 'having' | 'learning' | 'maturing' | 'Nothing' | 'enjoying'
+#PresPartVNot ->  'Nothing'
+
+IV[TENSE=pres, NUM=pl, SENT=neut] ->  'walk' | 'sing' | 'dance' | 'writing'
+IV[TENSE=pres, NUM=pl, SENT=neg] -> 'worry'
+
+
+TV[TENSE=pres, NUM=pl] -> 'mortar' | 'seek'
+TV[TENSE=pres, NUM=pl, SENT=pos] -> 'love' | 'like'
+TV[TENSE=pres, NUM=pl, SENT=neg] -> 'hate' | 'worry'
+TV[TENSE=pres, NUM=pl, SENT=neut] ->  'walk' | 'read' | 'sing' | 'dance' | 'taste' | 'seem' | 'happen' | 'work'
+
+# Intransitive, Transitive Verb and Stative Verb - Past Tense/Past Participle
+IV[TENSE=past] -> 'disappeared' | 'walked' | 'named' | 'wounded' | 'grew' | 'went' | 'decided' | 'said' | 'expected' \
+| 'cared' | 'detained' | 'priced'
+IV[TENSE=past, SENT=neg] -> 'disappointed'
+TV[TENSE=past] -> 'saw' | 'seemed' | 'heard'
+TV[TENSE=past, SENT=pos] -> 'loved' | 'liked'
+TV[TENSE=past, SENT=neg] -> 'fell' | 'did'
+TV[TENSE=past, SENT=neut] ->  'played'
+StateV[TENSE=past, NUM=sg] -> 'was'
+StateV[TENSE=past, NUM=pl] -> 'was' | 'were' | 'did'
+
+# Adjectives
+ADJ[NUM=sg, SENT=pos] -> 'cool' | 'strong' | 'independent' | 'happy' | 'fun' | 'good' | 'easy' | 'excellent' \
+| 'potential' | 'cute' | 'silky' | 'direct' | 'smart' | 'nice'
+ADJ[NUM=sg, SENT=neut] -> 'lyrical' | 'main' | 'least'
+ADJ[NUM=sg, SENT=neg] ->  'disappointed' | 'horrible' | 'lousy' | 'bad' | 'few' | 'rare' | 'negative' | 'terrible'
+ADJ[NUM=pl, SENT=pos] -> 'smart' | 'Good'
+
+# Prepositions
+IN -> 'of' | 'by' | 'for' | 'in' | 'with' | 'after' | 'that' | 'from' | 'near' | 'on' | 'at' | 'over' | 'versus' \
+| 'behind' | 'than' | 'against' | 'as' | 'while' | 'around' | 'like' | 'about'
+
+# TO
+TO -> 'to'
+
+# Cardinal Values
+CD -> '2005' | '17' | '135' | '292' | '1st' | '1655' | '87' | 'two' | '11' | '3.2bn' | '42bn' | 'one' | 'seven' \
+| 'three' | '1:20' | '355' | '11pm' | '5' | '11:38' | 'four'
+
+# Pronouns
+PRP[NUM=sg, SENT=neut] -> 'he' | 'He' | 'she' | 'She' | 'you' | 'You' | 'it' | 'It' | 'him' | 'her' | 'Her'
+PRP[NUM=pl, SENT=neut] -> 'they' | 'They' | 'we' | 'We' | 'themselves' | 'us' | 'I' | 'them'
+
+PRPS[NUM=sg, SENT=neut] -> 'your' | 'his' | 'its' | 'Their' | 'Its' | 'their' | 'her' | 'my'
+
+# Conjunctions
+CC1 -> 'but' | 'But'
+CC2 -> 'and' | 'And'
+
+# AdVerb
+RB[SENT=pos] -> 'extreme' | 'better' | 'well'
+RB[SENT=neut] -> 'extremely' | 'really' | 'very' | 'much' | 'far' | 'away' | 'About' | 'once' | 'reasonably' \
+| 'appropriately' | 'even'
+RB[SENT=neg] -> 'not'
+
+RP -> 'up' | 'off'
+
+WP -> 'who' | 'Who' | 'what' | 'What'
+
+WRB -> 'where' | 'when'
+
+POS -> "'s"
+
+DOLLAR -> '$'
+
+# Auxiliary Verb - MD
+AUXV-MD -> 'will' | 'could' | 'would' | 'should' | 'can'
+
+# Foreign Word
+FW -> 'en'
